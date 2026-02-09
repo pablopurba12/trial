@@ -1,0 +1,18 @@
+# Dashboard Sales FMCG (Excel Connected)
+
+Dashboard web sederhana untuk monitoring sales FMCG dengan filter:
+- Area
+- Brand
+- Bulan
+
+## Menjalankan
+Cukup buka `index.html` di browser.
+
+## Format Excel
+Sheet pertama harus memiliki header kolom:
+- `Tanggal`
+- `Area`
+- `Brand`
+- `Sales`
+
+Anda bisa upload file `.xlsx` atau `.xls` lewat input file di dashboard.
