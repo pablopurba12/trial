@@ -1,87 +1,80 @@
-const data = [
-  { area: "Jakarta", brand: "Kobe", month: "Jan", sales: 12000000 },
-  { area: "Jakarta", brand: "BonCabe", month: "Jan", sales: 9000000 },
-  { area: "Medan", brand: "Kobe", month: "Jan", sales: 7000000 },
-  { area: "Medan", brand: "BonCabe", month: "Feb", sales: 8000000 },
-  { area: "Surabaya", brand: "Kobe", month: "Feb", sales: 11000000 },
-  { area: "Surabaya", brand: "BonCabe", month: "Mar", sales: 9500000 },
-];
-
+let data = [];
 let chart;
 
-// Init filter
-function initFilter(id, values) {
-  const el = document.getElementById(id);
+// Dummy data kalau belum upload
+data = [
+  {area:"Jakarta",brand:"Kobe",month:"Jan",sales:12000000},
+  {area:"Medan",brand:"Kobe",month:"Jan",sales:8000000},
+  {area:"Surabaya",brand:"BonCabe",month:"Feb",sales:9000000},
+  {area:"Bandung",brand:"Kobe",month:"Mar",sales:11000000},
+];
 
+const areaFilter = document.getElementById("areaFilter");
+const brandFilter = document.getElementById("brandFilter");
+const monthFilter = document.getElementById("monthFilter");
+
+function initFilter(el, values){
   el.innerHTML = `<option value="All">All</option>`;
-
-  values.forEach(v => {
-    el.innerHTML += `<option value="${v}">${v}</option>`;
+  values.forEach(v=>{
+    el.innerHTML+=`<option>${v}</option>`;
   });
 }
 
-// Load dashboard
-function loadDashboard() {
+function refresh(){
 
-  const area = areaFilter.value;
-  const brand = brandFilter.value;
-  const month = monthFilter.value;
+  const a = areaFilter.value;
+  const b = brandFilter.value;
+  const m = monthFilter.value;
 
-  let filtered = data.filter(d =>
-    (area === "All" || d.area === area) &&
-    (brand === "All" || d.brand === brand) &&
-    (month === "All" || d.month === month)
+  let f = data.filter(d=>
+    (a==="All"||d.area===a)&&
+    (b==="All"||d.brand===b)&&
+    (m==="All"||d.month===m)
   );
 
-  // KPI
-  const total = filtered.reduce((a,b)=>a+b.sales,0);
-  const avg = total / (filtered.length || 1);
-  const active = new Set(filtered.map(d=>d.area)).size;
+  const total = f.reduce((x,y)=>x+y.sales,0);
+  const avg = total/(f.length||1);
 
-  totalSales.innerText = total.toLocaleString();
-  avgSales.innerText = avg.toLocaleString();
-  activeArea.innerText = active;
+  totalSales.innerText = "Rp "+total.toLocaleString();
+  trx.innerText = f.length;
+  avg.innerText = "Rp "+avg.toLocaleString();
 
-  // Chart
-  const grouped = {};
+  const grp = {};
 
-  filtered.forEach(d=>{
-    grouped[d.month] = (grouped[d.month] || 0) + d.sales;
+  f.forEach(d=>{
+    grp[d.month]=(grp[d.month]||0)+d.sales;
   });
 
-  const labels = Object.keys(grouped);
-  const values = Object.values(grouped);
+  const labels = Object.keys(grp);
+  const values = Object.values(grp);
 
   if(chart) chart.destroy();
 
-  chart = new Chart(salesChart, {
-    type: "bar",
-    data: {
+  chart = new Chart(chartEl,{
+    type:"bar",
+    data:{
       labels,
-      datasets: [{
-        label: "Sales",
-        data: values,
-        backgroundColor: "#2563eb"
+      datasets:[{
+        data:values,
+        backgroundColor:"#2563eb"
       }]
     }
   });
 }
 
-// Init
-const areaFilter = document.getElementById("areaFilter");
-const brandFilter = document.getElementById("brandFilter");
-const monthFilter = document.getElementById("monthFilter");
+const chartEl = document.getElementById("chart");
 
-const areas = [...new Set(data.map(d=>d.area))];
-const brands = [...new Set(data.map(d=>d.brand))];
-const months = [...new Set(data.map(d=>d.month))];
+function init(){
 
-initFilter("areaFilter", areas);
-initFilter("brandFilter", brands);
-initFilter("monthFilter", months);
+  initFilter(areaFilter,[...new Set(data.map(d=>d.area))]);
+  initFilter(brandFilter,[...new Set(data.map(d=>d.brand))]);
+  initFilter(monthFilter,[...new Set(data.map(d=>d.month))]);
 
-areaFilter.onchange = loadDashboard;
-brandFilter.onchange = loadDashboard;
-monthFilter.onchange = loadDashboard;
+  areaFilter.onchange=refresh;
+  brandFilter.onchange=refresh;
+  monthFilter.onchange=refresh;
 
-loadDashboard();
+  refresh();
+}
+
+init();
