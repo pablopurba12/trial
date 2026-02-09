@@ -1,80 +1,53 @@
-<!doctype html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Sales FMCG</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
-    <main class="container">
-      <header>
-        <h1>Dashboard Sales FMCG</h1>
-        <p>Upload file Excel lalu filter berdasarkan area, brand, dan bulan.</p>
-      </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sales Dashboard FMCG</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 
-      <section class="upload-card">
-        <label for="excelFile">Connect ke Excel (.xlsx / .xls)</label>
-        <input type="file" id="excelFile" accept=".xlsx,.xls" />
-        <small>
-          Format kolom yang dibutuhkan: <strong>Tanggal</strong>, <strong>Area</strong>,
-          <strong>Brand</strong>, <strong>Sales</strong>
-        </small>
-      </section>
+<body>
 
-      <section class="filters">
-        <div>
-          <label for="areaFilter">Area</label>
-          <select id="areaFilter"><option value="all">Semua Area</option></select>
-        </div>
-        <div>
-          <label for="brandFilter">Brand</label>
-          <select id="brandFilter"><option value="all">Semua Brand</option></select>
-        </div>
-        <div>
-          <label for="monthFilter">Bulan</label>
-          <select id="monthFilter"><option value="all">Semua Bulan</option></select>
-        </div>
-      </section>
+<header>
+  📊 Sales Dashboard FMCG
+</header>
 
-      <section class="kpis">
-        <article>
-          <h2>Total Sales</h2>
-          <p id="totalSales">Rp 0</p>
-        </article>
-        <article>
-          <h2>Jumlah Transaksi</h2>
-          <p id="totalTransactions">0</p>
-        </article>
-        <article>
-          <h2>Rata-rata per Transaksi</h2>
-          <p id="avgSales">Rp 0</p>
-        </article>
-      </section>
+<div class="container">
 
-      <section class="chart-card">
-        <h2>Sales per Brand</h2>
-        <canvas id="brandChart"></canvas>
-      </section>
+  <!-- Filter -->
+  <div class="filter-box">
+    <select id="areaFilter"></select>
+    <select id="brandFilter"></select>
+    <select id="monthFilter"></select>
+  </div>
 
-      <section class="table-card">
-        <h2>Data Penjualan</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Tanggal</th>
-              <th>Area</th>
-              <th>Brand</th>
-              <th>Sales</th>
-            </tr>
-          </thead>
-          <tbody id="salesTableBody"></tbody>
-        </table>
-      </section>
-    </main>
+  <!-- KPI -->
+  <div class="kpi-container">
+    <div class="kpi-card">
+      <h3>Total Sales</h3>
+      <p id="totalSales">0</p>
+    </div>
 
-    <script src="app.js"></script>
-  </body>
+    <div class="kpi-card">
+      <h3>Average Sales</h3>
+      <p id="avgSales">0</p>
+    </div>
+
+    <div class="kpi-card">
+      <h3>Active Area</h3>
+      <p id="activeArea">0</p>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-box">
+    <canvas id="salesChart"></canvas>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
 </html>
