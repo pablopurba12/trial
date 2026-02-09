@@ -1,53 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Sales Dashboard FMCG</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>FMCG Sales Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<header>
-  📊 Sales Dashboard FMCG
-</header>
+<div class="main">
 
-<div class="container">
+  <div class="header">
+    <h1>📊 FMCG Sales Dashboard</h1>
+    <p>Realtime monitoring penjualan nasional</p>
+  </div>
 
-  <!-- Filter -->
-  <div class="filter-box">
+  <div class="upload-box">
+    <div>
+      <b>Upload Excel</b><br>
+      <small>Format: Tanggal, Area, Brand, Sales</small>
+    </div>
+    <input type="file" id="fileInput" accept=".xlsx,.xls">
+  </div>
+
+  <div class="filters">
     <select id="areaFilter"></select>
     <select id="brandFilter"></select>
     <select id="monthFilter"></select>
   </div>
 
-  <!-- KPI -->
-  <div class="kpi-container">
-    <div class="kpi-card">
-      <h3>Total Sales</h3>
-      <p id="totalSales">0</p>
+  <div class="kpis">
+    <div class="kpi">
+      <h4>Total Sales</h4>
+      <h2 id="totalSales">0</h2>
     </div>
 
-    <div class="kpi-card">
-      <h3>Average Sales</h3>
-      <p id="avgSales">0</p>
+    <div class="kpi">
+      <h4>Transaksi</h4>
+      <h2 id="trx">0</h2>
     </div>
 
-    <div class="kpi-card">
-      <h3>Active Area</h3>
-      <p id="activeArea">0</p>
+    <div class="kpi">
+      <h4>Avg / Transaksi</h4>
+      <h2 id="avg">0</h2>
     </div>
   </div>
 
-  <!-- Chart -->
   <div class="chart-box">
-    <canvas id="salesChart"></canvas>
+    <canvas id="chart"></canvas>
   </div>
 
 </div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
